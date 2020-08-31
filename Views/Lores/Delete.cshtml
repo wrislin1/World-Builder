@@ -1,0 +1,20 @@
+﻿@model WorldBuilder.Models.Lore
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h2>Are you sure you want to delete @Model.Title?</h2>
+<div>
+
+    <hr />
+<p>Knowlede of @Model.Title will be erased from @Model.World.Name</p>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="LoreID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to Lores</a>
+    </form>
+</div>

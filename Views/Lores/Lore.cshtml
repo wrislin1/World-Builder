@@ -1,0 +1,16 @@
+﻿@model WorldBuilder.Models.Lore
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@Model.Title</h1><a asp-area="" asp-controller="Worlds" asp-action="World" asp-route-id="@Model.World.WorldID">@Model.World.Name</a>
+
+<div>
+    <hr />
+    <p>@Model.Details</p>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.LoreID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

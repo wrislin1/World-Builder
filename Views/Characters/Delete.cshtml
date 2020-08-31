@@ -1,0 +1,19 @@
+﻿@model WorldBuilder.Models.Character
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete @Model.Name?</h3>
+<div>
+    <hr />
+    <p>@Model.Name will be sent to the Void</p>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CharacterID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to Characters</a>
+    </form>
+</div>

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<WorldBuilder.Models.Location>
+
+@{
+    ViewData["Title"] = "Locations";
+}
+
+<h1>Locations</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.World)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-action="Location" asp-route-id="@item.LocationID"> @Html.DisplayFor(modelItem => item.Name)</a>
+</td>
+            <td>
+                <a asp-area="" asp-controller="Worlds" asp-action="World" asp-route-id="@item.WorldID">@Html.DisplayFor(modelItem => item.World.Name)</a>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.LocationID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

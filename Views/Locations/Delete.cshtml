@@ -1,0 +1,17 @@
+﻿@model WorldBuilder.Models.Location
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Are you sure you want to delete @Model.Name</h2>
+<div>
+    <hr />
+<p>@Model.Name will be sent to the void</p>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="LocationID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to Locations</a>
+    </form>
+</div>
