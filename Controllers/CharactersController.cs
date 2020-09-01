@@ -22,7 +22,7 @@ namespace WorldBuilder.Controllers
         // GET: Characters
         public async Task<IActionResult> Index()
         {
-            var worldContext = _context.Characters.Include(c => c.World);
+            var worldContext = _context.Characters.Include(c => c.Location).Include(c => c.World);
             return View(await worldContext.ToListAsync());
         }
 
@@ -35,6 +35,7 @@ namespace WorldBuilder.Controllers
             }
 
             var character = await _context.Characters
+                .Include(c => c.Location)
                 .Include(c => c.World)
                 .FirstOrDefaultAsync(m => m.CharacterID == id);
             if (character == null)
@@ -48,6 +49,7 @@ namespace WorldBuilder.Controllers
         // GET: Characters/Create
         public IActionResult Create()
         {
+            ViewData["LocationID"] = new SelectList(_context.Locations, "LocationID", "Name");
             ViewData["WorldID"] = new SelectList(_context.Worlds, "WorldID", "Name");
             return View();
         }
@@ -57,14 +59,27 @@ namespace WorldBuilder.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,CharacterID,WorldID,Summary")] Character character)
+        public async Task<IActionResult> Create([Bind("Name,CharacterID,WorldID,LocationID,Summary")] Character character)
         {
-            if (ModelState.IsValid)
+            
+            ViewBag.data = null;
+
+            if (ModelState.IsValid&&character.Name!=null)
             {
+                var location = await _context.Locations.Include(l => l.World).FirstOrDefaultAsync(m => m.LocationID == character.LocationID);
+                if (character.WorldID != location.WorldID)
+                {
+
+                    ViewData["LocationID"] = new SelectList(_context.Locations, "LocationID", "Name", character.LocationID);
+                    ViewData["WorldID"] = new SelectList(_context.Worlds, "WorldID", "Name", character.WorldID);
+                    ViewBag.location = location;
+                    return View(character);
+                }
                 _context.Add(character);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["LocationID"] = new SelectList(_context.Locations, "LocationID", "Name", character.LocationID);
             ViewData["WorldID"] = new SelectList(_context.Worlds, "WorldID", "Name", character.WorldID);
             return View(character);
         }
@@ -82,6 +97,7 @@ namespace WorldBuilder.Controllers
             {
                 return NotFound();
             }
+            ViewData["LocationID"] = new SelectList(_context.Locations, "LocationID", "Name", character.LocationID);
             ViewData["WorldID"] = new SelectList(_context.Worlds, "WorldID", "Name", character.WorldID);
             return View(character);
         }
@@ -91,11 +107,21 @@ namespace WorldBuilder.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,CharacterID,WorldID,Summary")] Character character)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,CharacterID,WorldID,LocationID,Summary")] Character character)
         {
             if (id != character.CharacterID)
             {
                 return NotFound();
+            }
+
+            var location = await _context.Locations.Include(l => l.World).FirstOrDefaultAsync(m => m.LocationID == character.LocationID);
+            ViewBag.data = null;
+            if (character.WorldID != location.WorldID)
+            {
+                ViewData["LocationID"] = new SelectList(_context.Locations, "LocationID", "Name", character.LocationID);
+                ViewData["WorldID"] = new SelectList(_context.Worlds, "WorldID", "Name", character.WorldID);
+                ViewBag.location = location;
+                return View(character);
             }
 
             if (ModelState.IsValid)
@@ -118,6 +144,7 @@ namespace WorldBuilder.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["LocationID"] = new SelectList(_context.Locations, "LocationID", "Name", character.LocationID);
             ViewData["WorldID"] = new SelectList(_context.Worlds, "WorldID", "Name", character.WorldID);
             return View(character);
         }
@@ -131,6 +158,7 @@ namespace WorldBuilder.Controllers
             }
 
             var character = await _context.Characters
+                .Include(c => c.Location)
                 .Include(c => c.World)
                 .FirstOrDefaultAsync(m => m.CharacterID == id);
             if (character == null)

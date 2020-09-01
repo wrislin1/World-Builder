@@ -8,10 +8,27 @@
 
 <div>
     <hr />
-<h3>Summary</h3>
+    <h3>Summary</h3>
     <hr />
     <p>@Model.Summary</p>
 </div>
+@if (ViewBag.data != null)
+{
+    <div class="row">
+        <div style="display:inline-block;">
+
+            <h3>Residents</h3>
+            <hr />
+
+            <ol>
+                @foreach (var item in ViewBag.data)
+                {
+                    <li><a asp-area="" asp-controller="Characters" asp-action="Character" asp-route-id="@item.CharacterID">@item.Name</a></li>
+                }
+            </ol>
+        </div>
+    </div>
+}
 <div>
     <a asp-action="Edit" asp-route-id="@Model.LocationID">Edit</a> |
     <a asp-action="Index">Back to Locations</a>

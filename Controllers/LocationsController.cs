@@ -42,6 +42,11 @@ namespace WorldBuilder.Controllers
                 return NotFound();
             }
 
+            if (_context.Characters.Where(m => m.LocationID == id).Any())
+                ViewBag.data = await _context.Characters.Where(m => m.LocationID == id).ToListAsync();
+            else
+                ViewBag.data = null;
+
             return View(location);
         }
 
@@ -59,7 +64,7 @@ namespace WorldBuilder.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("LocationID,WorldID,Name,Summary")] Location location)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid&&location.Name!=null)
             {
                 _context.Add(location);
                 await _context.SaveChangesAsync();

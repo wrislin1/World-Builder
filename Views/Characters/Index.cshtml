@@ -26,7 +26,7 @@
         <tr>
             <td>
                 <a asp-action="Character" asp-route-id="@item.CharacterID">@Html.DisplayFor(modelItem => item.Name)</a>
-</td>
+            </td>
             <td>
                 <a asp-area="" asp-controller="Worlds" asp-action="World" asp-route-id="@item.WorldID">@Html.DisplayFor(modelItem => item.World.Name)</a>
             </td>

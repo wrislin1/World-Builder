@@ -5,11 +5,17 @@
 }
 
 <h1>@Model.Name</h1><a asp-area="" asp-controller="Worlds" asp-action="World" asp-route-id="@Model.World.WorldID">@Model.World.Name</a>
-<hr />
+<br />
+@if (Model.Location != null)
+{
+    <p>Current Location: <a asp-area="" asp-controller="Locations" asp-action="Location" asp-route-id="@Model.Location.LocationID">@Model.Location.Name</a></p>
+}
+
 <div>
-<h3>Summary</h3>
-<hr />
-<p>@Model.Summary</p>
+    <hr />
+    <h3>Summary</h3>
+    <hr />
+    <p>@Model.Summary</p>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.CharacterID">Edit</a> |

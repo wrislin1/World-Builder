@@ -19,10 +19,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" required />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="CharacterID" />
+            <div class="form-group">
+                <label asp-for="LocationID" class="control-label">Location</label>
+                @Html.DropDownListFor(m => m.LocationID, (SelectList)ViewBag.LocationID, "None", new { @class = "form-control" })
+                <span asp-validation-for="LocationID" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Summary" class="control-label"></label>
                 <textarea form="charedit" asp-for="Summary" class="form-control"></textarea>
@@ -34,9 +39,12 @@
         </form>
     </div>
 </div>
-
+@if (ViewBag.location != null)
+{
+    <p>Error: @ViewBag.location.Name exists in @ViewBag.location.World.Name</p>
+}
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to Characters</a>
 </div>
 
 @section Scripts {

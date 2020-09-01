@@ -70,7 +70,7 @@ namespace WorldBuilder.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Summary,WorldID")] World world)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid&&world.Name!=null)
             {
                 _context.Add(world);
                 await _context.SaveChangesAsync();

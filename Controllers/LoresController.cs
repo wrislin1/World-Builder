@@ -59,7 +59,7 @@ namespace WorldBuilder.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("LoreID,WorldID,Title,Details")] Lore lore)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && lore.Title!=null)
             {
                 _context.Add(lore);
                 await _context.SaveChangesAsync();

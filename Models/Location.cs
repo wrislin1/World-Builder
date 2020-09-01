@@ -12,6 +12,7 @@ namespace WorldBuilder.Models
         public string Name { get; set; }
         public string Summary { get; set; }
         public World World { get; set; }
+        public ICollection<Character> Characters { get; set; }
 
     }
 }
