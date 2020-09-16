@@ -107,8 +107,22 @@ namespace WorldBuilder.Controllers
             {
                 try
                 {
+
+                    var change = _context.Locations.AsNoTracking().FirstOrDefault(m => m.LocationID == id);
                     _context.Update(location);
                     await _context.SaveChangesAsync();
+                    if (change.WorldID!=location.WorldID)
+                    {
+                        var worldContext = await _context.Characters.Include(c => c.World).Where(m => m.LocationID == location.LocationID).ToListAsync();
+                        foreach(var character in worldContext)
+                        {
+                            character.World = location.World;
+                            character.WorldID = location.WorldID;
+                            _context.Update(character);
+                            await _context.SaveChangesAsync();
+                        }
+                    }
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {

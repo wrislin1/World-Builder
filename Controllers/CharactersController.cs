@@ -64,17 +64,20 @@ namespace WorldBuilder.Controllers
             
             ViewBag.data = null;
 
-            if (ModelState.IsValid&&character.Name!=null)
+            if (ModelState.IsValid)
             {
                 var location = await _context.Locations.Include(l => l.World).FirstOrDefaultAsync(m => m.LocationID == character.LocationID);
-                if (character.WorldID != location.WorldID)
-                {
+                //if (character.LocationID != null)
+               // {
+                    if (character.LocationID != null&&character.WorldID != location.WorldID)
+                    {
 
-                    ViewData["LocationID"] = new SelectList(_context.Locations, "LocationID", "Name", character.LocationID);
-                    ViewData["WorldID"] = new SelectList(_context.Worlds, "WorldID", "Name", character.WorldID);
-                    ViewBag.location = location;
-                    return View(character);
-                }
+                        ViewData["LocationID"] = new SelectList(_context.Locations, "LocationID", "Name", character.LocationID);
+                        ViewData["WorldID"] = new SelectList(_context.Worlds, "WorldID", "Name", character.WorldID);
+                        ViewBag.location = location;
+                        return View(character);
+                    }
+               // }
                 _context.Add(character);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -116,7 +119,7 @@ namespace WorldBuilder.Controllers
 
             var location = await _context.Locations.Include(l => l.World).FirstOrDefaultAsync(m => m.LocationID == character.LocationID);
             ViewBag.data = null;
-            if (character.WorldID != location.WorldID)
+            if (character.LocationID != null&&character.WorldID != location.WorldID)
             {
                 ViewData["LocationID"] = new SelectList(_context.Locations, "LocationID", "Name", character.LocationID);
                 ViewData["WorldID"] = new SelectList(_context.Worlds, "WorldID", "Name", character.WorldID);
