@@ -7,7 +7,7 @@ namespace WorldBuilder.Models
 {
     public class Family
     {
-        public int ID { get; set; }
+        public int FamilyID { get; set; }
         public int Name { get; set; }
         public string Description { get; set; }
     }

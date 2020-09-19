@@ -17,7 +17,19 @@
     <hr />
     <p>@Model.Summary</p>
 </div>
+
+ @if(ViewBag.relations!=null)
+{
+<ul>
+    @foreach(var r in ViewBag.relations)
+    {
+    <li><a a asp-area="" asp-controller="Characters" asp-action="Character" asp-route-id="@r.Relative.CharacterID">@r.Relative.Name</a>  @r.Relation.Description  <a asp-area="" asp-controller="Relationships" asp-action="Delete" asp-route-id="@r.ID">Remove</a> </li> 
+
+    }
+</ul>
+}
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.CharacterID">Edit</a> |
-    <a asp-action="Index">Back to Characters</a>
+    <a asp-area="" asp-controller="Relationships" asp-action="Create" asp-route-id="@Model.CharacterID">Add Relationship</a> |
+    <a asp-action="Edit" asp-route-id="@Model.CharacterID">Edit</a> 
 </div>

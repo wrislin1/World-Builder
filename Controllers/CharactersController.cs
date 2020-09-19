@@ -13,7 +13,12 @@ namespace WorldBuilder.Controllers
     public class CharactersController : Controller
     {
         private readonly WorldContext _context;
-
+        public struct Relatives
+        {
+            public Character Relative { get; set; }
+            public RelationshipType Relation { get; set; }
+            public int ID { get;set; }
+        }
         public CharactersController(WorldContext context)
         {
             _context = context;
@@ -26,9 +31,11 @@ namespace WorldBuilder.Controllers
             return View(await worldContext.ToListAsync());
         }
 
-        // GET: Characters/Details/5
+        // GET: Characters/Character/5
         public async Task<IActionResult> Character(int? id)
         {
+
+            List<Relatives> relatives = new List<Relatives>();
             if (id == null)
             {
                 return NotFound();
@@ -42,6 +49,23 @@ namespace WorldBuilder.Controllers
             {
                 return NotFound();
             }
+            List<Relationship> relate  = await _context.Relationships.Where(r => r.Character1ID == id).ToListAsync();
+
+            foreach(var r in relate)
+            {
+                
+                Relatives temp = new Relatives();
+                Character c = new Character();
+                RelationshipType t = new RelationshipType();
+                c = await _context.Characters.FirstOrDefaultAsync(m => m.CharacterID == r.Character2ID);
+                t= await _context.RelationshipTypes.FirstOrDefaultAsync(m => m.RelationshipTypeID == r.RelationshipTypeID);
+                temp.Relative = c;
+                temp.Relation = t;
+                temp.ID = r.RelationshipID;
+                relatives.Add(temp);
+
+            }
+            ViewBag.relations = relatives;
 
             return View(character);
         }

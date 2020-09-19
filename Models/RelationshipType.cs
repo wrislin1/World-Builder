@@ -7,7 +7,7 @@ namespace WorldBuilder.Models
 {
     public class RelationshipType
     {
-        public int ID { get; set; }
+        public int RelationshipTypeID { get; set; }
         public string Description { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace WorldBuilder.Data
         public DbSet<Character> Characters { get; set; }
 
         public DbSet<Family> Families { get; set; }
-        public DbSet<Realtionship> Realtionships { get; set; }
+        public DbSet<Relationship> Relationships { get; set; }
         public DbSet<RelationshipType> RelationshipTypes { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -31,7 +31,7 @@ namespace WorldBuilder.Data
             modelBuilder.Entity<Character>().ToTable("Character");
             modelBuilder.Entity<Family>().ToTable("Family");
             modelBuilder.Entity<RelationshipType>().ToTable("RelationshipType");
-            modelBuilder.Entity<Realtionship>().ToTable("Realtionship");
+            modelBuilder.Entity<Relationship>().ToTable("Realtionship");
             modelBuilder.Entity<Role>().ToTable("Role");
             modelBuilder.Entity<Location>().ToTable("Location");
             modelBuilder.Entity<Lore>().ToTable("Lore");

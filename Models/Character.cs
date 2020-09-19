@@ -18,6 +18,6 @@ namespace WorldBuilder.Models
 
         public string Summary { get; set; }
 
-        public ICollection<Realtionship> Relationships { get; set; }
+        public ICollection<Relationship> Relationships { get; set; }
     }
 }

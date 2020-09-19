@@ -11,24 +11,24 @@ namespace WorldBuilder.Data
         public static void Initialize(WorldContext context)
         {
             context.Database.EnsureCreated();
-            if (!context.Roles.Any())
+            if (!context.RelationshipTypes.Any())
             {
-                var roles = new Role[]
+                var RelationshipTypes = new RelationshipType[]
                 {
-                    new Role{Description="Father"},new Role{Description="Mother"},new Role{Description="Brother"}, new Role{Description="Sister"},
-                    new Role{Description="Uncle"}, new Role{Description="Aunt"},new Role{Description="Uncle"},new Role{Description="Cousin"}, new Role{Description="GrandFather"},
-                    new Role{Description="Grandmother"}, new Role{Description="Husband"}, new Role{Description="Wife"}, new Role{Description="Boyfriend"},
-                    new Role{Description="Girlfriend"}, new Role{Description="Friends"}
+                    new RelationshipType{Description="Parent"},new RelationshipType{Description="Sibling"},
+                    new RelationshipType{Description="Cousin"}, new RelationshipType{Description="GrandParent"},
+                     new RelationshipType{Description="Spouse"},new RelationshipType{Description="Romantic Partner"}, new RelationshipType{Description="Friend"}
+                    , new RelationshipType{Description="GrandChild"}, new RelationshipType{Description="Child"}
                 };
 
-                foreach(Role r in roles)
+                foreach(RelationshipType r in RelationshipTypes)
                 {
-                    context.Roles.Add(r);
+                    context.RelationshipTypes.Add(r);
                 }
                 context.SaveChanges();
             }
 
-            if(!context.RelationshipTypes.Any())
+            /* if(!context.RelationshipTypes.Any())
             {
                 var relationshiptypes = new RelationshipType[] 
                 {
@@ -40,7 +40,7 @@ namespace WorldBuilder.Data
                     context.RelationshipTypes.Add(t);
                 }
                 context.SaveChanges();
-            }
+            } */
 
         }
     }

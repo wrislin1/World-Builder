@@ -1,0 +1,51 @@
+﻿@model WorldBuilder.Models.Relationship
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Realtionship</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <select asp-for="Character1ID" class="form-control" asp-items="ViewBag.char1"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Character2ID" class="control-label">Character</label>
+                <select asp-for="Character2ID" class="form-control" asp-items="ViewBag.chars"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="RelationshipTypeID" class="control-label">Relation to</label>
+                <select asp-for="RelationshipTypeID" class="form-control" asp-items="ViewBag.RelationshipTypeID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Details" class="control-label"></label>
+                <input asp-for="Details" class="form-control" />
+                <span asp-validation-for="Details" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@if (ViewBag.related != null)
+{
+    <div>
+        These Characters are already Related
+    </div>
+
+}
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
