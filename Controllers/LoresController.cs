@@ -46,9 +46,12 @@ namespace WorldBuilder.Controllers
         }
 
         // GET: Lores/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
+            if(id==null)
             ViewData["WorldID"] = new SelectList(_context.Worlds, "WorldID", "Name");
+            else
+                ViewData["WorldID"] = new SelectList(_context.Worlds.Where(w=>w.WorldID==id), "WorldID", "Name");
             return View();
         }
 

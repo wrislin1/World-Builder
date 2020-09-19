@@ -71,10 +71,23 @@ namespace WorldBuilder.Controllers
         }
 
         // GET: Characters/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
-            ViewData["LocationID"] = new SelectList(_context.Locations, "LocationID", "Name");
-            ViewData["WorldID"] = new SelectList(_context.Worlds, "WorldID", "Name");
+
+
+
+            if (id == null)
+            {
+                ViewData["WorldID"] = new SelectList(_context.Worlds, "WorldID", "Name");
+                ViewData["LocationID"] = new SelectList(_context.Locations.OrderBy(l=>l.WorldID), "LocationID", "Name");
+            }
+
+
+            else
+            {
+                ViewData["WorldID"] = new SelectList(_context.Worlds.Where(w => w.WorldID == id), "WorldID", "Name");
+                ViewData["LocationID"] = new SelectList(_context.Locations.Where(w => w.WorldID == id), "LocationID", "Name");
+            }
             return View();
         }
 
